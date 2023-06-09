@@ -2,8 +2,10 @@ package him.springframework.spring6webapp.bootstrap;
 
 import him.springframework.spring6webapp.domain.Author;
 import him.springframework.spring6webapp.domain.Book;
+import him.springframework.spring6webapp.domain.Publisher;
 import him.springframework.spring6webapp.repositories.AuthorRepository;
 import him.springframework.spring6webapp.repositories.BookRepository;
+import him.springframework.spring6webapp.repositories.PublisherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +14,15 @@ public class BootstrapData implements CommandLineRunner {
 
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
+    private final PublisherRepository publisherRepository;
 
-    public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository) {
+    public BootstrapData(
+            AuthorRepository authorRepository,
+            BookRepository bookRepository,
+            PublisherRepository publisherRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
+        this.publisherRepository = publisherRepository;
     }
 
     @Override
@@ -48,5 +55,16 @@ public class BootstrapData implements CommandLineRunner {
         System.out.println("In Bootstrap");
         System.out.println("Author count: " + authorRepository.count());
         System.out.println("Book count: " + bookRepository.count());
+
+        Publisher github = new Publisher();
+        github.setPublisherName("Github");
+        github.setAddress("US");
+        github.setCity("Ohio");
+        github.setState("Columbus");
+        github.setZip("123456");
+
+        Publisher githubSaved = publisherRepository.save(github);
+
+        System.out.println("Publisher count: " + publisherRepository.count());
     }
 }
