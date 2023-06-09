@@ -49,12 +49,6 @@ public class BootstrapData implements CommandLineRunner {
         Author kinSaved = authorRepository.save(kin);
         Book rtsSaved = bookRepository.save(rts);
 
-        himSaved.getBooks().add(dddSaved);
-        kinSaved.getBooks().add(rtsSaved);
-
-        System.out.println("In Bootstrap");
-        System.out.println("Author count: " + authorRepository.count());
-        System.out.println("Book count: " + bookRepository.count());
 
         Publisher github = new Publisher();
         github.setPublisherName("Github");
@@ -62,8 +56,22 @@ public class BootstrapData implements CommandLineRunner {
         github.setCity("Ohio");
         github.setState("Columbus");
         github.setZip("123456");
-
         Publisher githubSaved = publisherRepository.save(github);
+
+        dddSaved.setPublisher(githubSaved);
+        rtsSaved.setPublisher(githubSaved);
+
+        himSaved.getBooks().add(dddSaved);
+        kinSaved.getBooks().add(rtsSaved);
+
+        authorRepository.save(himSaved);
+        authorRepository.save(kinSaved);
+        bookRepository.save(dddSaved);
+        bookRepository.save(rtsSaved);
+
+        System.out.println("In Bootstrap");
+        System.out.println("Author count: " + authorRepository.count());
+        System.out.println("Book count: " + bookRepository.count());
 
         System.out.println("Publisher count: " + publisherRepository.count());
     }
